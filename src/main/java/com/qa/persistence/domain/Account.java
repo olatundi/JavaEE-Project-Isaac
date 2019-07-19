@@ -1,8 +1,5 @@
 package com.qa.persistence.domain;
 
-
-
-
 public class Account {
 	private Integer id;
 	private String username;
