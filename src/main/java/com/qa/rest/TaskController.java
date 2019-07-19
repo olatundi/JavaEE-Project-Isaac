@@ -24,9 +24,9 @@ public class TaskController {
 	}
 
 	@POST
-	@Path("/createTask")
-	public String createTask(String task) {
-		return this.service.createTask(task);
+	@Path("/createTask/{id}")
+	public String createTask(@PathParam("id") int accountId, String task) {
+		return this.service.createTask(accountId, task);
 	}
 
 	@DELETE
@@ -37,8 +37,8 @@ public class TaskController {
 
 	@POST
 	@Path("/update/{id}")
-	public String updateTask(@PathParam("id") int taskId, String account) {
-		return this.service.updateTask(taskId, account);
+	public String updateTask(@PathParam("id") int taskId, String task) {
+		return this.service.updateTask(taskId, task);
 	}
 }
 

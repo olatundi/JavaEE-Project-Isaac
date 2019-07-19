@@ -17,6 +17,6 @@ public interface AccountRepository {
 
 	String updateAccount(int accountId, String account) throws AccountNotFoundException;
 
-	List<Account> findAccountsByFirstName(String firstName);
+	List<Account> findAccountByUserID(int userID);
 
 }

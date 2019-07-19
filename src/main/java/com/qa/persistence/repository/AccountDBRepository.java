@@ -64,10 +64,10 @@ public class AccountDBRepository implements AccountRepository {
 	}
 
 
-	public List<Account> findAccountsByUsername(String userName) {
-		TypedQuery<Account> query = this.em.createQuery("SELECT a FROM Account a WHERE a.userName = :userName",
+	public List<Account> findAccountByUserID(int userID) {
+		TypedQuery<Account> query = this.em.createQuery("SELECT a FROM Account a WHERE a.id = :userID",
 				Account.class);
-		query.setParameter("userName", userName);
+		query.setParameter("userID", userID);
 		return query.getResultList();
 	}
 }
