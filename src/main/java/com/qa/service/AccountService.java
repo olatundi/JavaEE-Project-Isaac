@@ -14,6 +14,6 @@ public interface AccountService {
 
 	String updateAccount(int accountId, String account) throws AccountNotFoundException;
 
-	List<Account> findAccountsByUsername(String userName);
+	List<Account> findAccountByUserID(int userID);
 
 }

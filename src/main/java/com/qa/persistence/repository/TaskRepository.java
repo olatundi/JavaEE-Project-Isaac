@@ -11,12 +11,12 @@ public interface TaskRepository {
 
 	String getAllTasks();
 
-	String createTask(String task);
+	String createTask(int accountID, String task);
 
 	String deleteTask(int taskId) throws TaskNotFoundException;
 
-	String updateTask(int taskId, String account) throws TaskNotFoundException;
+	String updateTask(int taskId, String task) throws TaskNotFoundException;
 
-	List<Task> findTaskByUserID(int userID);
+	List<Task> findTaskByAccountID(int userID);
 
 }

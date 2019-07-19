@@ -24,8 +24,11 @@ public class TaskDBRepository implements TaskRepository {
     private EntityManager em;
 	@Inject
 	private JSONUtil util;
-//	@Inject
-//	private AccountRepository accRepo;
+	
+	
+	@Inject
+	private AccountRepository accRepo;
+	
 	public String getAllTasks() {
 		TypedQuery<Task> query = em.createQuery("SELECT T FROM Task T", Task.class);
 		return this.util.getJSONForObject(query.getResultList());
@@ -33,8 +36,11 @@ public class TaskDBRepository implements TaskRepository {
 
 	
 	@Transactional(value = TxType.REQUIRED)
-	public String createTask (String task) {
+	public String createTask (int accountID, String task ) {
 		Task aTask = util.getObjectForJSON(task, Task.class);
+		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
+//		this.em.find(Account.class, foundAcc.ge)
+		aTask.setAccount(foundAcc);
 		this.em.persist(aTask);
 		return SUCCESS;
 	}
@@ -65,7 +71,7 @@ public class TaskDBRepository implements TaskRepository {
 	}
 
 
-	public List<Task> findTaskByUserID(int userID) {
+	public List<Task> findTaskByAccountID(int userID) {
 		TypedQuery<Task> query = this.em.createQuery("SELECT a FROM Account a WHERE a.account.id = :id",
 				Task.class);
 		query.setParameter("id", userID);

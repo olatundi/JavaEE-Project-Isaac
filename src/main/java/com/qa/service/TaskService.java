@@ -8,7 +8,7 @@ import com.qa.persistence.domain.Task;
 public interface TaskService {
 	String getAllTasks();
 
-	String createTask(String task);
+	String createTask(int accountID, String task);
 
 	String deleteTask(int taskId) throws TaskNotFoundException;
 

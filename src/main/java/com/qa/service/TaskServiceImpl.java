@@ -20,9 +20,9 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public String createTask(String task) {
+	public String createTask(int accountID, String task) {
 		// TODO Auto-generated method stub
-		return this.repo.createTask(task);
+		return this.repo.createTask(accountID, task);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class TaskServiceImpl implements TaskService{
 	@Override
 	public List<Task> findTasksByAccountID(int userId) {
 		// TODO Auto-generated method stub
-		return this.repo.findTaskByUserID(userId);
+		return this.repo.findTaskByAccountID(userId);
 	}
 
 	
