@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import com.qa.exceptions.TaskNotFoundException;
-import com.qa.persistence.domain.Task;
+import com.qa.exceptions.BoardNotFoundException;
+import com.qa.persistence.domain.Board;
 import com.qa.persistence.repository.TaskRepository;
 
 public class TaskServiceImpl implements TaskService{
@@ -26,19 +26,19 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public String deleteTask(int taskId) throws TaskNotFoundException {
+	public String deleteTask(int taskId) throws BoardNotFoundException {
 		// TODO Auto-generated method stub
 		return this.repo.deleteTask(taskId);
 	}
 
 	@Override
-	public String updateTask(int taskId, String task) throws TaskNotFoundException {
+	public String updateTask(int taskId, String task) throws BoardNotFoundException {
 		// TODO Auto-generated method stub
 		return this.repo.updateTask(taskId, task);
 	}
 
 	@Override
-	public List<Task> findTasksByAccountID(int userId) {
+	public List<Board> findTasksByAccountID(int userId) {
 		// TODO Auto-generated method stub
 		return this.repo.findTaskByAccountID(userId);
 	}

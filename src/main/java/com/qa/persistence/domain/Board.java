@@ -9,28 +9,25 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Task {
+public class Board {
 	@Id @GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Integer id;
-	private String description;
-	private String priority;
+	private String name;
 	
 	
 	@ManyToOne
 //	@JoinColumn(name = "id")
 	private Account account;
 	
-	public Task(Integer id, String description, String priority) {
+	public Board(Integer id, String name) {
 		super();
 		this.id = id;
-		this.description = description;
-		this.priority = priority;
+		this.name = name;
 	}
 	
-	public Task() {
+	public Board() {
 		
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -40,21 +37,15 @@ public class Task {
 		this.id = id;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPriority() {
-		return priority;
-	}
-
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
+	
 
 	public Account getAccount() {
 		return account;
@@ -73,16 +64,11 @@ public class Task {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Task other = (Task) obj;
-		if (priority == null) {
-			if (other.priority != null)
+		Board other = (Board) obj;
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!priority.equals(other.priority))
-			return false;
-		if (description == null) {
-			if (other.description != null)
-				return false;
-		} else if (!description.equals(other.description))
+		} else if (!name.equals(other.name))
 			return false;
 		if (id == null) {
 			if (other.id != null)
