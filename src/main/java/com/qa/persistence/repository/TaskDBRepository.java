@@ -10,10 +10,9 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import com.qa.exceptions.AccountNotFoundException;
-import com.qa.exceptions.BoardNotFoundException;
+import com.qa.exceptions.TaskNotFoundException;
 import com.qa.persistence.domain.Account;
-import com.qa.persistence.domain.Board;
+import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
@@ -30,14 +29,14 @@ public class TaskDBRepository implements TaskRepository {
 	private AccountRepository accRepo;
 	
 	public String getAllTasks() {
-		TypedQuery<Board> query = em.createQuery("SELECT T FROM Task T", Board.class);
+		TypedQuery<Task> query = em.createQuery("SELECT T FROM Task T", Task.class);
 		return this.util.getJSONForObject(query.getResultList());
 	}
 
 	
 	@Transactional(value = TxType.REQUIRED)
 	public String createTask (int accountID, String task ) {
-		Board aTask = util.getObjectForJSON(task, Board.class);
+		Task aTask = this.util.getObjectForJSON(task, Task.class);
 		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
 //		this.em.find(Account.class, foundAcc.ge)
 		aTask.setAccount(foundAcc);
@@ -45,23 +44,21 @@ public class TaskDBRepository implements TaskRepository {
 		return SUCCESS;
 	}
 
-	public Board findTask(Integer id) {
-        return this.em.find(Board.class, id);
-    }
+	
 
 	@Transactional(value = TxType.REQUIRED)
 	public String deleteTask(int taskId) {
-		Board toRem = this.em.find(Board.class, taskId);
+		Task toRem = this.em.find(Task.class, taskId);
 		this.em.remove(toRem);
 		return SUCCESS;
 	}
 	
 	@Transactional(value = TxType.REQUIRED)
 	public String updateTask(int id, String task) {
-		Board aTask = this.util.getObjectForJSON(task, Board.class);
-		Board existing = this.em.find(Board.class, id);
+		Task aTask = this.util.getObjectForJSON(task, Task.class);
+		Task existing = this.em.find(Task.class, id);
 		if (existing == null) {
-			throw new BoardNotFoundException();
+			throw new TaskNotFoundException();
 		}
 		existing.setAccount(aTask.getAccount());
 		existing.setDescription(aTask.getDescription());
@@ -71,9 +68,9 @@ public class TaskDBRepository implements TaskRepository {
 	}
 
 
-	public List<Board> findTaskByAccountID(int userID) {
-		TypedQuery<Board> query = this.em.createQuery("SELECT a FROM Account a WHERE a.account.id = :id",
-				Board.class);
+	public List<Task> findTaskByAccountID(int userID) {
+		TypedQuery<Task> query = this.em.createQuery("SELECT a FROM Account a WHERE a.account.id = :id",
+				Task.class);
 		query.setParameter("id", userID);
 		return query.getResultList();
 	}

@@ -2,8 +2,8 @@ package com.qa.persistence.repository;
 
 import java.util.List;
 
-import com.qa.exceptions.BoardNotFoundException;
-import com.qa.persistence.domain.Board;
+import com.qa.exceptions.TaskNotFoundException;
+import com.qa.persistence.domain.Task;
 
 public interface TaskRepository {
 	final String SUCCESS = "Operation succeeded";
@@ -13,10 +13,10 @@ public interface TaskRepository {
 
 	String createTask(int accountID, String task);
 
-	String deleteTask(int taskId) throws BoardNotFoundException;
+	String deleteTask(int taskId) throws TaskNotFoundException;
 
-	String updateTask(int taskId, String task) throws BoardNotFoundException;
+	String updateTask(int taskId, String task) throws TaskNotFoundException;
 
-	List<Board> findTaskByAccountID(int userID);
+	List<Task> findTaskByAccountID(int userID);
 
 }
