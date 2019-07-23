@@ -13,6 +13,7 @@ import javax.transaction.Transactional.TxType;
 import com.qa.exceptions.AccountNotFoundException;
 import com.qa.exceptions.TaskNotFoundException;
 import com.qa.persistence.domain.Account;
+import com.qa.persistence.domain.Board;
 import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
 
@@ -27,20 +28,19 @@ public class TaskDBRepository implements TaskRepository {
 	
 	
 	@Inject
-	private AccountRepository accRepo;
+	private BoardRepository boardRepo;
 	
 	public String getAllTasks() {
 		TypedQuery<Task> query = em.createQuery("SELECT T FROM Task T", Task.class);
 		return this.util.getJSONForObject(query.getResultList());
 	}
-
 	
 	@Transactional(value = TxType.REQUIRED)
-	public String createTask (int accountID, String task ) {
+	public String createTask (int boardID, String task ) {
 		Task aTask = util.getObjectForJSON(task, Task.class);
-		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
+		Board foundBoard = this.boardRepo.findBoardByBoardID(boardID).get(0);
 //		this.em.find(Account.class, foundAcc.ge)
-		aTask.setAccount(foundAcc);
+		aTask.setBoard(foundBoard);
 		this.em.persist(aTask);
 		return SUCCESS;
 	}
@@ -63,7 +63,7 @@ public class TaskDBRepository implements TaskRepository {
 		if (existing == null) {
 			throw new TaskNotFoundException();
 		}
-		existing.setAccount(aTask.getAccount());
+		existing.setBoard(aTask.getBoard());
 		existing.setDescription(aTask.getDescription());
 		existing.setPriority(aTask.getPriority());
 		this.em.persist(existing);	
