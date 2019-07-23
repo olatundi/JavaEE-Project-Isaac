@@ -16,6 +16,7 @@ import com.qa.persistence.domain.Board;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
+@Default
 public class BoardDBRepository implements BoardRepository {
 	
 	@PersistenceContext(unitName = "primary")
@@ -26,7 +27,7 @@ public class BoardDBRepository implements BoardRepository {
 	private AccountRepository accRepo;
 	
 	public String getAllBoards() {
-		TypedQuery<Board> query = em.createQuery("SELECT T FROM Task T", Board.class);
+		TypedQuery<Board> query = em.createQuery("SELECT B FROM Board B", Board.class);
 		return this.util.getJSONForObject(query.getResultList());
 	}
 
@@ -34,7 +35,13 @@ public class BoardDBRepository implements BoardRepository {
 	public String createBoard (int accountID, String board ) {
 		Board aBoard = util.getObjectForJSON(board, Board.class);
 		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
-//		this.em.find(Account.class, foundAcc.ge)
+		Account foundAcc2 = this.em.find(Account.class, accountID);
+		if (foundAcc == null) {
+			throw new BoardNotFoundException();
+		}
+		else if(foundAcc2 ==null) {
+			return"2 is wrong";
+		}
 		aBoard.setAccount(foundAcc);
 		this.em.persist(aBoard);
 		return SUCCESS;
@@ -64,14 +71,11 @@ public class BoardDBRepository implements BoardRepository {
 		return SUCCESS;
 	}
 
-
 	public List<Board> findBoardByBoardID(int boardID) {
 		TypedQuery<Board> query = this.em.createQuery("SELECT b FROM Board b WHERE b.id = :id",
 				Board.class);
 		query.setParameter("id", boardID);
 		return query.getResultList();
 	}
-
-
 	
 }

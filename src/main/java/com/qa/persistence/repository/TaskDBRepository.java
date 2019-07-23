@@ -15,6 +15,7 @@ import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
+@Default
 public class TaskDBRepository implements TaskRepository {
 	
 	@PersistenceContext(unitName = "primary")
@@ -68,7 +69,7 @@ public class TaskDBRepository implements TaskRepository {
 
 
 	public List<Task> findTaskByAccountID(int userID) {
-		TypedQuery<Task> query = this.em.createQuery("SELECT a FROM Account a WHERE a.account.id = :id",
+		TypedQuery<Task> query = this.em.createQuery("SELECT T FROM Task T WHERE a.account.id = :id",
 				Task.class);
 		query.setParameter("id", userID);
 		return query.getResultList();

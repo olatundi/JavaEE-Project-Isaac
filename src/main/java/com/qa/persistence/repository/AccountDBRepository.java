@@ -27,7 +27,6 @@ public class AccountDBRepository implements AccountRepository {
 		return this.util.getJSONForObject(query.getResultList());
 	}
 
-	
 	@Transactional(value = TxType.REQUIRED)
 	public String createAccount(String account) {
 		Account aAccount = util.getObjectForJSON(account, Account.class);
@@ -62,11 +61,13 @@ public class AccountDBRepository implements AccountRepository {
 		return SUCCESS;
 	}
 
-
 	public List<Account> findAccountByUserID(int userID) {
 		TypedQuery<Account> query = this.em.createQuery("SELECT a FROM Account a WHERE a.id = :userID",
 				Account.class);
 		query.setParameter("userID", userID);
+		if (query == null) {
+			throw new AccountNotFoundException();
+		}
 		return query.getResultList();
 	}
 }

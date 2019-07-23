@@ -8,11 +8,8 @@ import com.qa.exceptions.BoardNotFoundException;
 import com.qa.persistence.domain.Board;
 import com.qa.persistence.repository.BoardRepository;
 
-
-
 public class BoardServiceImpl implements BoardService{
 
-	
 	@Inject
 	private BoardRepository boardRepo;
 	@Override
