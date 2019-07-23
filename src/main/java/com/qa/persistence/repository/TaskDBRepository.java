@@ -9,16 +9,12 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
-
-import com.qa.exceptions.AccountNotFoundException;
 import com.qa.exceptions.TaskNotFoundException;
-import com.qa.persistence.domain.Account;
 import com.qa.persistence.domain.Board;
 import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
-@Default
 public class TaskDBRepository implements TaskRepository {
 	
 	@PersistenceContext(unitName = "primary")

@@ -8,7 +8,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
-import com.qa.service.AccountService;
 import com.qa.service.TaskService;
 
 @Path("/task")

@@ -20,9 +20,9 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public String createTask(int accountID, String task) {
+	public String createTask(int boardID, String task) {
 		// TODO Auto-generated method stub
-		return this.repo.createTask(accountID, task);
+		return this.repo.createTask(boardID, task);
 	}
 
 	@Override

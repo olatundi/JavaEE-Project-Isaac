@@ -10,14 +10,12 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import com.qa.exceptions.AccountNotFoundException;
 import com.qa.exceptions.BoardNotFoundException;
 import com.qa.persistence.domain.Account;
 import com.qa.persistence.domain.Board;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
-@Default
 public class BoardDBRepository implements BoardRepository {
 	
 	@PersistenceContext(unitName = "primary")
@@ -25,8 +23,6 @@ public class BoardDBRepository implements BoardRepository {
 	@Inject
 	private JSONUtil util;
 	
-	
-	@Inject
 	private AccountRepository accRepo;
 	
 	public String getAllBoards() {
@@ -34,7 +30,6 @@ public class BoardDBRepository implements BoardRepository {
 		return this.util.getJSONForObject(query.getResultList());
 	}
 
-	
 	@Transactional(value = TxType.REQUIRED)
 	public String createBoard (int accountID, String board ) {
 		Board aBoard = util.getObjectForJSON(board, Board.class);

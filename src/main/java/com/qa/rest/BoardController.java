@@ -8,37 +8,36 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
-import com.qa.service.AccountService;
-import com.qa.service.TaskService;
+import com.qa.service.BoardService;
 
-@Path("/task")
+@Path("/board")
 public class BoardController {
 
 	@Inject
-	private TaskService service;
+	private BoardService service;
 
 	@GET
 	@Path("/getAll")
-	public String getAllTasks() {
-		return this.service.getAllTasks();
+	public String getAllBoards() {
+		return this.service.getAllBoards();
 	}
 
 	@POST
-	@Path("/createTask/{id}")
-	public String createTask(@PathParam("id") int accountId, String task) {
-		return this.service.createTask(accountId, task);
+	@Path("/createBoard/{id}")
+	public String createBoard(@PathParam("id") int accountId, String board) {
+		return this.service.createBoard(accountId, board);
 	}
 
 	@DELETE
 	@Path("/delete/{id}")
-	public String deleteTask(@PathParam("id") int taskId) {
-		return this.service.deleteTask(taskId);
+	public String deleteBoard(@PathParam("id") int boardId) {
+		return this.service.deleteBoard(boardId);
 	}
 
 	@POST
 	@Path("/update/{id}")
-	public String updateTask(@PathParam("id") int taskId, String task) {
-		return this.service.updateTask(taskId, task);
+	public String updateBoard(@PathParam("id") int boardId, String board) {
+		return this.service.updateBoard(boardId, board);
 	}
 }
 
