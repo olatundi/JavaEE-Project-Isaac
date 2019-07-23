@@ -10,7 +10,6 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
-import com.qa.exceptions.AccountNotFoundException;
 import com.qa.exceptions.TaskNotFoundException;
 import com.qa.persistence.domain.Account;
 import com.qa.persistence.domain.Task;
@@ -37,7 +36,7 @@ public class TaskDBRepository implements TaskRepository {
 	
 	@Transactional(value = TxType.REQUIRED)
 	public String createTask (int accountID, String task ) {
-		Task aTask = util.getObjectForJSON(task, Task.class);
+		Task aTask = this.util.getObjectForJSON(task, Task.class);
 		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
 //		this.em.find(Account.class, foundAcc.ge)
 		aTask.setAccount(foundAcc);
@@ -45,9 +44,7 @@ public class TaskDBRepository implements TaskRepository {
 		return SUCCESS;
 	}
 
-	public Task findTask(Integer id) {
-        return this.em.find(Task.class, id);
-    }
+	
 
 	@Transactional(value = TxType.REQUIRED)
 	public String deleteTask(int taskId) {
