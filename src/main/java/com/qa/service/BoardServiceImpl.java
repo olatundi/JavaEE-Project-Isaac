@@ -7,41 +7,42 @@ import javax.inject.Inject;
 import com.qa.exceptions.BoardNotFoundException;
 import com.qa.persistence.domain.Board;
 import com.qa.persistence.repository.BoardRepository;
-import com.qa.persistence.repository.TaskRepository;
+
+
 
 public class BoardServiceImpl implements BoardService{
 
 	
 	@Inject
-	private BoardRepository repo;
+	private BoardRepository boardRepo;
 	@Override
 	public String getAllBoards() {
 		// TODO Auto-generated method stub
-		return this.repo.getAllBoards();
+		return this.boardRepo.getAllBoards();
 	}
 
 	@Override
 	public String createBoard(int accountID, String board) {
 		// TODO Auto-generated method stub
-		return this.repo.createBoard(accountID, board);
+		return this.boardRepo.createBoard(accountID, board);
 	}
 
 	@Override
 	public String deleteBoard(int boardId) throws BoardNotFoundException {
 		// TODO Auto-generated method stub
-		return this.repo.deleteBoard(boardId);
+		return this.boardRepo.deleteBoard(boardId);
 	}
 
 	@Override
 	public String updateBoard(int boardId, String board) throws BoardNotFoundException {
 		// TODO Auto-generated method stub
-		return this.repo.updateBoard(boardId, board);
+		return this.boardRepo.updateBoard(boardId, board);
 	}
 
 	@Override
 	public List<Board> findBoardByBoardID(int boardID) {
 		// TODO Auto-generated method stub
-		return this.repo.findBoardByBoardID(boardID);
+		return this.boardRepo.findBoardByBoardID(boardID);
 	}
 
 	
