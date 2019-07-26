@@ -37,9 +37,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public List<Board> findBoardByBoardID(int boardID) {
+	public String findBoardByAccID(int accountID) {
 		// TODO Auto-generated method stub
-		return this.boardRepo.findBoardByBoardID(boardID);
+		return this.boardRepo.findBoardByAccID(accountID);
 	}
 
 	

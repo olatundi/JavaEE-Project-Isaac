@@ -33,8 +33,13 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public List<Account> findAccountByUserID(int userID) {
+	public String findAccountByUserID(int userID) {
 		return this.repo.findAccountByUserID(userID);
+	}
+	@Override
+	public String login(String account) {
+		// TODO Auto-generated method stub
+		return this.repo.login(account);
 	}
 
 

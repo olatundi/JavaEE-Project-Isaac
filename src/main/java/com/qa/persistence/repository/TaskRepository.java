@@ -1,9 +1,6 @@
 package com.qa.persistence.repository;
 
-import java.util.List;
-
 import com.qa.exceptions.TaskNotFoundException;
-import com.qa.persistence.domain.Task;
 
 public interface TaskRepository {
 	final String SUCCESS = "Operation succeeded";
@@ -17,6 +14,6 @@ public interface TaskRepository {
 
 	String updateTask(int taskId, String task) throws TaskNotFoundException;
 
-	List<Task> findTaskByAccountID(int userID);
+	String findTaskByAccountID(int userID);
 
 }

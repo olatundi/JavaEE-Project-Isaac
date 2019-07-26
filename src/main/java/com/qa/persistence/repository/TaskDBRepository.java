@@ -9,7 +9,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
+
+import com.qa.exceptions.BoardNotFoundException;
 import com.qa.exceptions.TaskNotFoundException;
+import com.qa.persistence.domain.Account;
 import com.qa.persistence.domain.Board;
 import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
@@ -35,9 +38,12 @@ public class TaskDBRepository implements TaskRepository {
 	@Transactional(value = TxType.REQUIRED)
 	public String createTask (int boardID, String task ) {
 		Task aTask = util.getObjectForJSON(task, Task.class);
-		Board foundBoard = this.boardRepo.findBoardByBoardID(boardID).get(0);
-//		this.em.find(Account.class, foundAcc.ge)
-		aTask.setBoard(foundBoard);
+//		Board foundBoard = this.boardRepo.findBoardByBoardID(boardID).get(0);
+		Board foundBoard2 = this.em.find(Board.class, boardID);
+		if (foundBoard2 == null) {
+			throw new BoardNotFoundException();
+		}
+		aTask.setBoard(foundBoard2);
 		this.em.persist(aTask);
 		return SUCCESS;
 	}
@@ -60,7 +66,6 @@ public class TaskDBRepository implements TaskRepository {
 		if (existing == null) {
 			throw new TaskNotFoundException();
 		}
-		existing.setBoard(aTask.getBoard());
 		existing.setDescription(aTask.getDescription());
 		existing.setPriority(aTask.getPriority());
 		this.em.persist(existing);	
@@ -68,11 +73,11 @@ public class TaskDBRepository implements TaskRepository {
 	}
 
 
-	public List<Task> findTaskByAccountID(int userID) {
-		TypedQuery<Task> query = this.em.createQuery("SELECT T FROM Task T WHERE a.account.id = :id",
+	public String findTaskByAccountID(int userID) {
+		TypedQuery<Task> query = this.em.createQuery("SELECT T FROM Task T WHERE T.board.account.id = :id",
 				Task.class);
 		query.setParameter("id", userID);
-		return query.getResultList();
+		return this.util.getJSONForObject(query.getResultList());
 	}
 
 

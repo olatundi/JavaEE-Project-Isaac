@@ -33,16 +33,14 @@ public class BoardDBRepository implements BoardRepository {
 
 	@Transactional(value = TxType.REQUIRED)
 	public String createBoard (int accountID, String board ) {
-		Board aBoard = util.getObjectForJSON(board, Board.class);
-		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
+		Board aBoard = this.util.getObjectForJSON(board, Board.class);
+//		Account foundAcc = this.accRepo.findAccountByUserID(accountID).get(0);
 		Account foundAcc2 = this.em.find(Account.class, accountID);
-		if (foundAcc == null) {
+		if (foundAcc2 == null) {
 			throw new BoardNotFoundException();
 		}
-		else if(foundAcc2 ==null) {
-			return"2 is wrong";
-		}
-		aBoard.setAccount(foundAcc);
+		
+		aBoard.setAccount(foundAcc2);
 		this.em.persist(aBoard);
 		return SUCCESS;
 	}
@@ -65,17 +63,16 @@ public class BoardDBRepository implements BoardRepository {
 		if (existing == null) {
 			throw new BoardNotFoundException();
 		}
-		existing.setAccount(aBoard.getAccount());
 		existing.setName(aBoard.getName());
 		this.em.persist(existing);	
 		return SUCCESS;
 	}
 
-	public List<Board> findBoardByBoardID(int boardID) {
-		TypedQuery<Board> query = this.em.createQuery("SELECT b FROM Board b WHERE b.id = :id",
+	public String findBoardByAccID(int accountID) {
+		TypedQuery<Board> query = this.em.createQuery("SELECT b FROM Board b WHERE b.account.id = :id",
 				Board.class);
-		query.setParameter("id", boardID);
-		return query.getResultList();
+		query.setParameter("id", accountID);
+		return this.util.getJSONForObject(query.getResultList());
 	}
 	
 }

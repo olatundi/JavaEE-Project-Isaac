@@ -17,6 +17,6 @@ public interface BoardRepository {
 
 	String updateBoard(int boardId, String board) throws BoardNotFoundException;
 
-	List<Board> findBoardByBoardID(int boardID);
+	String findBoardByAccID(int accountID);
 
 }

@@ -23,21 +23,27 @@ public class BoardController {
 	}
 
 	@POST
-	@Path("/createBoard/{id}")
-	public String createBoard(@PathParam("id") int accountId, String board) {
+	@Path("/create/{accountId}")
+	public String createBoard(@PathParam("accountId") int accountId, String board) {
 		return this.service.createBoard(accountId, board);
 	}
 
 	@DELETE
-	@Path("/delete/{id}")
-	public String deleteBoard(@PathParam("id") int boardId) {
+	@Path("/delete/{boardId}")
+	public String deleteBoard(@PathParam("boardId") int boardId) {
 		return this.service.deleteBoard(boardId);
 	}
 
 	@POST
-	@Path("/update/{id}")
-	public String updateBoard(@PathParam("id") int boardId, String board) {
+	@Path("/update/{boardId}")
+	public String updateBoard(@PathParam("boardId") int boardId, String board) {
 		return this.service.updateBoard(boardId, board);
+	}
+	
+	@Path("/findBoard/{accountId}")
+	@GET
+	public String findBoard(@PathParam("accountId") int accountId) {
+		return this.service.findBoardByAccID(accountId);
 	}
 }
 
