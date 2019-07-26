@@ -15,6 +15,7 @@ public class Task {
 	private String description;
 	private String priority;
 	
+	
 	@ManyToOne
 //	@JoinColumn(name = "id")
 	private Board board;
