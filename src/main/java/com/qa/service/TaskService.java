@@ -14,6 +14,6 @@ public interface TaskService {
 
 	String updateTask(int taskId, String task) throws TaskNotFoundException;
 
-	List<Task> findTasksByAccountID(int userID);
+	String findTasksByAccountID(int userID);
 
 }

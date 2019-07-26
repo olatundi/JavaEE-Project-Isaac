@@ -18,7 +18,7 @@ public class Task {
 	
 	@ManyToOne
 //	@JoinColumn(name = "id")
-	private Account account;
+	private Board board;
 	
 	public Task(Integer id, String description, String priority) {
 		super();
@@ -30,7 +30,6 @@ public class Task {
 	public Task() {
 		
 	}
-
 
 	public Integer getId() {
 		return id;
@@ -56,14 +55,13 @@ public class Task {
 		this.priority = priority;
 	}
 
-	public Account getAccount() {
-		return account;
+	public Board getBoard() {
+		return board;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setBoard(Board board) {
+		this.board = board;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {

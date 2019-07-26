@@ -23,11 +23,22 @@ public class Board {
 		super();
 		this.id = id;
 		this.name = name;
+
 	}
 	
 	public Board() {
 		
 	}
+
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -37,15 +48,6 @@ public class Board {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	
 
 	public Account getAccount() {
 		return account;

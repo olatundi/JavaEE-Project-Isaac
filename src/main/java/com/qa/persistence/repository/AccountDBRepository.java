@@ -1,5 +1,6 @@
 package com.qa.persistence.repository;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.enterprise.inject.Default;
@@ -15,7 +16,6 @@ import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
-@Default
 public class AccountDBRepository implements AccountRepository {
 	
 	@PersistenceContext(unitName = "primary")
@@ -28,7 +28,6 @@ public class AccountDBRepository implements AccountRepository {
 		return this.util.getJSONForObject(query.getResultList());
 	}
 
-	
 	@Transactional(value = TxType.REQUIRED)
 	public String createAccount(String account) {
 		Account aAccount = util.getObjectForJSON(account, Account.class);
@@ -54,7 +53,6 @@ public class AccountDBRepository implements AccountRepository {
 		if (existing == null) {
 			throw new AccountNotFoundException();
 		}
-		existing.setId(aAccount.getId());
 		existing.setUsername(aAccount.getUsername());
 		existing.setPassword(aAccount.getPassword());
 		existing.setFirstName(aAccount.getFirstName());
@@ -63,11 +61,21 @@ public class AccountDBRepository implements AccountRepository {
 		return SUCCESS;
 	}
 
-
-	public List<Account> findAccountByUserID(int userID) {
+	public String findAccountByUserID(int userID) {
 		TypedQuery<Account> query = this.em.createQuery("SELECT a FROM Account a WHERE a.id = :userID",
 				Account.class);
 		query.setParameter("userID", userID);
-		return query.getResultList();
+		
+		return this.util.getJSONForObject(query.getResultList());
+	}
+	
+	public String login(String account) {
+		Account anAcc = this.util.getObjectForJSON(account, Account.class);
+		String username = anAcc.getUsername();
+		String password = anAcc.getPassword();
+		TypedQuery<Account> query = this.em.createQuery("Select a From Account a WHERE a.username='"+username+"' AND a.password ='"+password+"'" ,
+				Account.class);
+		List<Account> result = query.getResultList();
+		return this.util.getJSONForObject(result);
 	}
 }
