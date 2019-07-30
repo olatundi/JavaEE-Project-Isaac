@@ -13,6 +13,8 @@ import javax.transaction.Transactional.TxType;
 
 import com.qa.exceptions.AccountNotFoundException;
 import com.qa.persistence.domain.Account;
+import com.qa.persistence.domain.Board;
+import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
@@ -41,6 +43,24 @@ public class AccountDBRepository implements AccountRepository {
 
 	@Transactional(value = TxType.REQUIRED)
 	public String deleteAccount(int accountID) {
+		TypedQuery<Task> query = this.em.createQuery("SELECT t FROM Task t WHERE t.board.account.id = :id",
+				Task.class);
+		query.setParameter("id", accountID);
+		
+		for(Task t: query.getResultList()) {
+			Task tasRem = this.em.find(Task.class, t.getId());
+			this.em.remove(tasRem);
+		}
+		
+		TypedQuery<Board> query1 = this.em.createQuery("SELECT b FROM Board b WHERE b.board.account.id = :id",
+				Board.class);
+		query1.setParameter("id", accountID);
+		
+		for(Board b: query1.getResultList()) {
+			Board boaRem = this.em.find(Board.class, b.getId());
+			this.em.remove(boaRem);
+		}
+	
 		Account toRem = em.find(Account.class, accountID);
 		this.em.remove(toRem);
 		return SUCCESS;

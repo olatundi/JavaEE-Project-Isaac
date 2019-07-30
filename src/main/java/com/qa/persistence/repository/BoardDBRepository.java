@@ -13,6 +13,7 @@ import javax.transaction.Transactional.TxType;
 import com.qa.exceptions.BoardNotFoundException;
 import com.qa.persistence.domain.Account;
 import com.qa.persistence.domain.Board;
+import com.qa.persistence.domain.Task;
 import com.qa.util.JSONUtil;
 
 @Transactional(value = TxType.SUPPORTS)
@@ -51,6 +52,16 @@ public class BoardDBRepository implements BoardRepository {
 
 	@Transactional(value = TxType.REQUIRED)
 	public String deleteBoard(int boardId) {
+		
+		TypedQuery<Task> query = this.em.createQuery("SELECT t FROM Task t WHERE t.board.id = :id",
+				Task.class);
+		query.setParameter("id", boardId);
+		
+		for(Task t: query.getResultList()) {
+			Task tasRem = this.em.find(Task.class, t.getId());
+			this.em.remove(tasRem);
+		}
+		
 		Board toRem = this.em.find(Board.class, boardId);
 		this.em.remove(toRem);
 		return SUCCESS;
