@@ -14,6 +14,6 @@ public interface TaskRepository {
 
 	String updateTask(int taskId, String task) throws TaskNotFoundException;
 
-	String findTaskByAccountID(int userID);
+	String findTaskByBoardID(int userID);
 
 }

@@ -40,10 +40,10 @@ public class TaskController {
 		return this.service.updateTask(taskId, task);
 	}
 	
-	@Path("/findTask/{accountId}")
+	@Path("/findTask/{boardId}")
 	@GET
-	public String findTask(@PathParam("accountId") int accountId) {
-		return this.service.findTasksByAccountID(accountId);
+	public String findTask(@PathParam("boardId") int boardId) {
+		return this.service.findTasksByBoardID(boardId);
 	}
 }
 
