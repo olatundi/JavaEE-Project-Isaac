@@ -23,12 +23,13 @@ public class Board {
 		super();
 		this.id = id;
 		this.name = name;
-		
+
 	}
 	
 	public Board() {
 		
 	}
+
 	
 	public String getName() {
 		return name;
@@ -38,6 +39,7 @@ public class Board {
 		this.name = name;
 	}
 
+
 	public Integer getId() {
 		return id;
 	}
@@ -45,6 +47,7 @@ public class Board {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 
 	public Account getAccount() {
 		return account;
