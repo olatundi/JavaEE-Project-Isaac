@@ -38,9 +38,9 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public String findTasksByAccountID(int userId) {
+	public String findTasksByBoardID(int boardId) {
 		// TODO Auto-generated method stub
-		return this.repo.findTaskByAccountID(userId);
+		return this.repo.findTaskByBoardID(boardId);
 	}
 
 	

@@ -73,10 +73,10 @@ public class TaskDBRepository implements TaskRepository {
 	}
 
 
-	public String findTaskByAccountID(int userID) {
-		TypedQuery<Task> query = this.em.createQuery("SELECT T FROM Task T WHERE T.board.account.id = :id",
+	public String findTaskByBoardID(int boardID) {
+		TypedQuery<Task> query = this.em.createQuery("SELECT T FROM Task T WHERE T.board.id = :id",
 				Task.class);
-		query.setParameter("id", userID);
+		query.setParameter("id", boardID);
 		return this.util.getJSONForObject(query.getResultList());
 	}
 
