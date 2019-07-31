@@ -52,7 +52,7 @@ public class AccountDBRepository implements AccountRepository {
 			this.em.remove(tasRem);
 		}
 		
-		TypedQuery<Board> query1 = this.em.createQuery("SELECT b FROM Board b WHERE b.board.account.id = :id",
+		TypedQuery<Board> query1 = this.em.createQuery("SELECT b FROM Board b WHERE b.account.id = :id",
 				Board.class);
 		query1.setParameter("id", accountID);
 		
